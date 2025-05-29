@@ -84,10 +84,10 @@ pip install -r requirements.txt
 
 ## 🚀 Future Improvements
 
-While the current approach based on contour detection and thresholding works reasonably well, there is room for improvement — especially in increasing the **accuracy** of image region detection. Here are a few ideas for future development:
+While the current approach based on contour detection and thresholding works reasonably well, there is room for improvement — especially in increasing the **accuracy** of image region detection. Below are some ideas for future development:
 
 ### 1. 🧠 Use Deep Learning for Image Detection
-Instead of relying purely on size-based filters and OpenCV contours, we can integrate a **pre-trained object detection model** like:
+Instead of relying purely on size-based filters and OpenCV contours, we can integrate a **pre-trained object detection model** such as:
 - **YOLO (You Only Look Once)**
 - **Faster R-CNN**
 - **EfficientDet**
@@ -97,37 +97,17 @@ These models can be fine-tuned to distinguish between actual images and text blo
 ---
 
 ### 2. 🗂️ Add Text vs Image Classifier
-After extracting blocks, a lightweight **classifier (e.g., CNN)** can be applied to determine whether the cropped region is an image or text/noise. This reduces false positives.
-
----
-
-### 3. 📄 Use PDF Structure with OCR Assistance
-Some PDFs do not embed images as raster content but as vector graphics. We can:
-- Combine **PyMuPDF rendering** with **Tesseract OCR** to ignore text-heavy areas.
-- Overlay OCR output to **exclude text boxes** from the image extraction phase.
+After extracting blocks, a lightweight **classifier (e.g., CNN)** can be used to determine whether the cropped region is an image or text/noise. This helps reduce false positives and improve extraction accuracy.
 
 ---
 
 ### 4. 📏 Aspect Ratio and Color Histogram Filtering
 Improve pre-processing by:
-- Filtering out unlikely image regions using **aspect ratio ranges** more dynamically.
-- Using **color histograms** to differentiate between grayscale text areas and colorful images.
+- Filtering out unlikely image regions using **dynamic aspect ratio ranges**.
+- Leveraging **color histograms** to differentiate between grayscale text regions and colorful images.
 
 ---
 
-### 5. 🔍 Manual Review or Annotation Option
-Add a manual review UI to:
-- Allow users to select/deselect blocks before download.
-- Use **Streamlit's interactive components** for bounding box overlays and cropping tools.
+By implementing these improvements, the application can evolve from basic contour detection to a more robust, AI-assisted image extractor — capable of handling a variety of PDF structures and layouts with significantly better precision.
 
----
-
-### 6. 📦 Export as Annotated PDF
-Instead of (or in addition to) saving cropped images:
-- Draw rectangles around detected image blocks.
-- Re-export the PDF with visual highlights to assist with auditing or annotation.
-
----
-
-By integrating these improvements, the application can evolve from simple contour-based detection into a more robust, AI-assisted image extractor — capable of handling a wide variety of PDF structures and layouts with higher precision.
 
