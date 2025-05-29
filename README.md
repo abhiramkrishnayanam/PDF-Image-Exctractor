@@ -55,7 +55,7 @@ Install all necessary dependencies:
 
 ```bash
 pip install -r requirements.txt
-
+```
 ## 🧩 Challenges & Resolutions
 
 **Challenge:** Large images crowding the UI  
