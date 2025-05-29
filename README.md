@@ -58,8 +58,6 @@ pip install -r requirements.txt
 
 ## 🧩 Challenges & Resolutions
 
-## 🧩 Challenges & Resolutions
-
 **Challenge:** Large images crowding the UI  
 **Resolution:** Used `PIL.Image.thumbnail()` to resize images for a cleaner display.
 
