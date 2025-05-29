@@ -58,11 +58,21 @@ pip install -r requirements.txt
 
 ## 🧩 Challenges & Resolutions
 
-| **Challenge**                                                              | **Resolution**                                                                                                                                                    |
-|---------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Large images crowding the UI                                              | Used `PIL.Image.thumbnail()` to resize images for display                                                                                                        |
-| Unwanted text/noise in output                                             | Applied size filters and contour-based image block extraction                                                                                                   |
-| UI elements rendering out of order                                        | Ensured the ZIP download button is displayed before showing the images                                                                                          |
-| Managing temporary files                                                  | Used Python’s `tempfile` module to handle temporary directories safely and cleanly                                                                              |
-| Inability to detect embedded images if not truly image-type content       | Since many "images" in PDFs are actually vector graphics or drawn content, traditional image extraction fails. We addressed this by using high-resolution rendering (300 DPI) and contour detection to extract visual regions resembling images, even if not embedded as raster image objects. |
+## 🧩 Challenges & Resolutions
+
+**Challenge:** Large images crowding the UI  
+**Resolution:** Used `PIL.Image.thumbnail()` to resize images for a cleaner display.
+
+**Challenge:** Unwanted text or noise appearing in the extracted output  
+**Resolution:** Applied size filters and contour-based image block extraction to isolate likely image regions.
+
+**Challenge:** UI elements like buttons and images rendering out of order  
+**Resolution:** Structured the Streamlit layout to ensure the ZIP download button appears before the image gallery.
+
+**Challenge:** Managing temporary files safely and efficiently  
+**Resolution:** Utilized Python’s `tempfile` module to handle temporary directories cleanly without leaving residual files.
+
+**Challenge:** Inability to detect embedded images when they aren’t actual raster images  
+**Resolution:** Many images in PDFs are not true embedded image files but vector graphics or drawn content. We resolved this by rendering each PDF page at 300 DPI and using OpenCV contour detection to extract image-like regions based on their visual appearance.
+
 
