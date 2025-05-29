@@ -8,7 +8,7 @@ A simple Streamlit-based web app that extracts image blocks from PDF files using
 
 ---
 
-## 🧰 Tools / Libraries Used
+##  Tools / Libraries Used
 
 - **Python** – Core programming language
 - **[Streamlit](https://streamlit.io/)** – Framework for building web apps
@@ -20,52 +20,52 @@ A simple Streamlit-based web app that extracts image blocks from PDF files using
 
 ---
 
-## 🧭 Step-by-step Explanation of the Approach
+##  Step-by-step Explanation of the Approach
 
 ### 1. 📥 Uploading the PDF
 - The user uploads a PDF file containing pages with potentially image-like content.
 - Streamlit handles the file upload and temporarily saves the file for processing.
 
-### 2. 🧠 PDF Processing and Image Detection
+### 2.  PDF Processing and Image Detection
 - We use **PyMuPDF (`fitz`)** to render each page of the PDF at high resolution (300 DPI).
 - This rendering converts all visible content — including non-image visuals like vector graphics — into pixel data.
 - Each rendered page is converted into a NumPy array and processed using **OpenCV**.
 
-### 3. 🔍 Preprocessing with OpenCV
+### 3.  Preprocessing with OpenCV
 - Convert the image to **grayscale**.
 - Apply **binary thresholding** (with `cv2.threshold`) to enhance contrast.
 - Detect **contours** (connected components) in the thresholded image which may represent image blocks.
 - Apply filters based on **width and height** to eliminate noise or small non-image elements.
 
-### 4. 🖼️ Extracting Image Regions
+### 4.  Extracting Image Regions
 - For each valid contour, the bounding box is used to crop the image from the original page.
 - These cropped regions are saved as individual image files in an output folder.
 
-### 5. 🧳 Packaging for Download
+### 5.  Packaging for Download
 - After processing, all extracted images are compressed into a `.zip` file.
 - A download button is provided to let the user download all extracted images at once.
 
-### 6. 🌐 UI Display
+### 6.  UI Display
 - To avoid clutter, each extracted image is **resized using PIL’s `.thumbnail()`** method.
 - Images are displayed in a grid layout using Streamlit’s column-based structure.
 - Each displayed image includes a **download button**, allowing selective downloads if desired.
 
-### 7. 🧹 Cleanup
+### 7.  Cleanup
 - Temporary directories and files are managed using Python’s `tempfile` module.
 - This ensures no clutter is left behind after the session ends.
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙ Setup Instructions
 
-### 🔧 Requirements
+###  Requirements
 
 Install all necessary dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
-## 🧩 Challenges & Resolutions
+##  Challenges & Resolutions
 
 **Challenge:** Large images crowding the UI  
 **Resolution:** Used `PIL.Image.thumbnail()` to resize images for a cleaner display.
@@ -82,11 +82,11 @@ pip install -r requirements.txt
 **Challenge:** Inability to detect embedded images when they aren’t actual raster images  
 **Resolution:** Many images in PDFs are not true embedded image files but vector graphics or drawn content. We resolved this by rendering each PDF page at 300 DPI and using OpenCV contour detection to extract image-like regions based on their visual appearance.
 
-## 🚀 Future Improvements
+##  Future Improvements
 
 While the current approach based on contour detection and thresholding works reasonably well, there is room for improvement — especially in increasing the **accuracy** of image region detection. Below are some ideas for future development:
 
-### 1. 🧠 Use Deep Learning for Image Detection
+### 1.  Use Deep Learning for Image Detection
 Instead of relying purely on size-based filters and OpenCV contours, we can integrate a **pre-trained object detection model** such as:
 - **YOLO (You Only Look Once)**
 - **Faster R-CNN**
@@ -96,12 +96,12 @@ These models can be fine-tuned to distinguish between actual images and text blo
 
 ---
 
-### 2. 🗂️ Add Text vs Image Classifier
+### 2.  Add Text vs Image Classifier
 After extracting blocks, a lightweight **classifier (e.g., CNN)** can be used to determine whether the cropped region is an image or text/noise. This helps reduce false positives and improve extraction accuracy.
 
 ---
 
-### 4. 📏 Aspect Ratio and Color Histogram Filtering
+### 4.  Aspect Ratio and Color Histogram Filtering
 Improve pre-processing by:
 - Filtering out unlikely image regions using **dynamic aspect ratio ranges**.
 - Leveraging **color histograms** to differentiate between grayscale text regions and colorful images.
