@@ -20,30 +20,39 @@ A simple Streamlit-based web app that extracts image blocks from PDF files using
 
 ---
 
-## 🔍 Step-by-Step Explanation of the Approach
+## 🧭 Step-by-step Explanation of the Approach
 
-1. **Upload PDF File**  
-   The user uploads a PDF file through the app UI.
+### 1. 📥 Uploading the PDF
+- The user uploads a PDF file containing pages with potentially image-like content.
+- Streamlit handles the file upload and temporarily saves the file for processing.
 
-2. **PDF to Image Conversion**  
-   Each page of the PDF is converted to a high-resolution image using `PyMuPDF` at 300 DPI.
+### 2. 🧠 PDF Processing and Image Detection
+- We use **PyMuPDF (`fitz`)** to render each page of the PDF at high resolution (300 DPI).
+- This rendering converts all visible content — including non-image visuals like vector graphics — into pixel data.
+- Each rendered page is converted into a NumPy array and processed using **OpenCV**.
 
-3. **Image Block Detection**  
-   - Convert the image to grayscale
-   - Apply binary thresholding
-   - Use `cv2.findContours()` to detect visual regions
-   - Filter out small/noisy contours using size thresholds
+### 3. 🔍 Preprocessing with OpenCV
+- Convert the image to **grayscale**.
+- Apply **binary thresholding** (with `cv2.threshold`) to enhance contrast.
+- Detect **contours** (connected components) in the thresholded image which may represent image blocks.
+- Apply filters based on **width and height** to eliminate noise or small non-image elements.
 
-4. **Image Extraction**  
-   - Each valid image block is cropped from the page
-   - Saved into an output folder
+### 4. 🖼️ Extracting Image Regions
+- For each valid contour, the bounding box is used to crop the image from the original page.
+- These cropped regions are saved as individual image files in an output folder.
 
-5. **Download Option**  
-   - A ZIP archive of all extracted images is created
-   - Users can download the full archive or individual images
+### 5. 🧳 Packaging for Download
+- After processing, all extracted images are compressed into a `.zip` file.
+- A download button is provided to let the user download all extracted images at once.
 
-6. **Image Display**  
-   - Images are shown as thumbnails with optional individual download buttons
+### 6. 🌐 UI Display
+- To avoid clutter, each extracted image is **resized using PIL’s `.thumbnail()`** method.
+- Images are displayed in a grid layout using Streamlit’s column-based structure.
+- Each displayed image includes a **download button**, allowing selective downloads if desired.
+
+### 7. 🧹 Cleanup
+- Temporary directories and files are managed using Python’s `tempfile` module.
+- This ensures no clutter is left behind after the session ends.
 
 ---
 
